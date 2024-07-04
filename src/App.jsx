@@ -1,27 +1,35 @@
-import "./App.css";
 import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [messageInput, setMessageInput] = useState("");
-  const [message, setMessage] = useState("Greeting Message");
+  const [inputMessage, setInputMessage] = useState("");
+  const [displayMessage, setDisplayMessage] = useState("");
+
   return (
     <div className="App">
-      <div className="greeting-container">{message}</div>
+      <div className="greeting-container">
+        {(() => {
+          if (displayMessage) {
+            return displayMessage;
+          } else {
+            return "Greeting Message";
+          }
+        })()}
+      </div>
       <div className="input-container">
         <label htmlFor="greeting-message">New Greeting Message</label>
         <input
           id="greeting-message"
           type="text"
-          onChange={(event) => {
-            setMessageInput(event.target.value);
-          }}
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
         />
       </div>
-
       <div className="buttons">
         <button
-          onClick={(event) => {
-            setMessage(messageInput);
+          onClick={() => {
+            setDisplayMessage(inputMessage);
+            setInputMessage("");
           }}
         >
           Update text
